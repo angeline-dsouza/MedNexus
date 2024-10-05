@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Specific Patient Record</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9bc9dc; /* Purple */
+            text-align: center;
+        }
+        .container { 
+            margin: 20px; 
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px; /* Adjusted padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Adjusted font size */
+            margin: 10px 5px; /* Adjusted margin */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition */
+        }
+        .button:hover {
+            background-color: #45a049; /* Darker green */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        h2 {
+            font-size: 2em; /* Adjusted font size */
+            font-family: 'Times New Roman', Times, serif;
+            margin-bottom: 20px;
+        }
+        input {
+            font-size: 1em; /* Adjusted font size */
+            padding: 10px; /* Add padding for better appearance */
+            margin: 10px 0; /* Add margin for spacing */
+            width: 80%; /* Full width input */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .record {
+            margin: 10px 0;
+            text-align: left;
+            font-size: 1em; /* Adjusted font size */
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body onload="checkPassword()">
+    <div class="container">
+        <h2>View Specific Patient Record</h2>
+        <input type="text" id="searchName" placeholder="Patient Name" required><br>
+        <button class="button" onclick="displayPatientRecord()">Search</button>
+        <a href="Untitled-2.html" class="button">Back to Main Page</a>
+        <div id="searchOutput" class="record"></div>
+    </div>
+
+    <script src="password.js"></script>
+    <script>
+        let blockchain = JSON.parse(localStorage.getItem('blockchain')) || [];
+
+        function displayPatientRecord() {
+            const name = document.getElementById('searchName').value;
+            const record = blockchain.find(block => block.patient.name === name);
+            let output = "";
+
+            if (record) {
+                output = `<div class="record">`;
+                output += `<strong>Block ${record.index}:</strong><br>`;
+                output += `  Name: ${record.patient.name}<br>`;
+                output += `  Diagnosis: ${record.patient.diagnosis}<br>`;
+                output += `  Height: ${record.patient.height} cm<br>`;
+                output += `  Weight: ${record.patient.weight} kg<br>`;
+                output += `</div>`;
+            } else {
+                output = "Patient not found.";
+            }
+
+            document.getElementById('searchOutput').innerHTML = output;
+        }
+    </script>
+</body>
+</html>

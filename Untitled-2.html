@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mednexus</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9bc9dc; /* Purple */
+            text-align: center;
+        }
+        .container { 
+            margin: 20px; 
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px; /* Adjusted padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Adjusted font size */
+            margin: 10px 5px; /* Adjusted margin */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition */
+        }
+        .button:hover {
+            background-color: #45a049; /* Darker green */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        .button-red {
+            background-color: #f44336; /* Red */
+        }
+        .button-red:hover {
+            background-color: #d32f2f; /* Darker red */
+        }
+        h1 {
+            font-size: calc(2em + 30px); /* Adjusted size */
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .bottom-buttons {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How can MedNexus help you today?</h1>
+        <div id="menu">
+            <a href="addRecord.html" class="button">Add Patient Record</a>
+            <a href="viewRecords.html" class="button">View All Patient Records</a>
+            <a href="searchRecord.html" class="button">View Specific Patient Record</a>
+            <a href="manageRecords.html" class="button">Manage Records</a>
+        </div>
+        <div class="bottom-buttons">
+            <button class="button button-red" onclick="exitApp()">Exit</button>
+            <a href="Untitled-1.html" class="button button-red">Back to Welcome Page</a>
+        </div>
+    </div>
+
+    <script>
+        function exitApp() {
+            if (confirm("Are you sure you want to exit?")) {
+                window.close(); // This may not work in all browsers
+            }
+        }
+    </script>
+</body>
+</html>

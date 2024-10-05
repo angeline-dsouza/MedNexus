@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Patient Record</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9bc9dc; /* Purple */
+            text-align: center;
+        }
+        .container { 
+            margin: 20px; 
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px; /* Adjusted padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Adjusted font size */
+            margin: 10px 5px; /* Adjusted margin */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition */
+        }
+        .button:hover {
+            background-color: #45a049; /* Darker green */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        h2 {
+            font-size: 2em; /* Adjusted font size */
+            font-family: 'Times New Roman', Times, serif;
+            margin-bottom: 20px;
+        }
+        input {
+            font-size: 1em; /* Adjusted font size */
+            padding: 10px; /* Add padding for better appearance */
+            margin: 10px 0; /* Add margin for spacing */
+            width: 80%; /* Full width input */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Patient Record</h2>
+        <input type="text" id="patientName" placeholder="Patient Name" required><br>
+        <input type="text" id="diagnosis" placeholder="Diagnosis" required><br>
+        <input type="number" id="height" placeholder="Height (cm)" required><br>
+        <input type="number" id="weight" placeholder="Weight (kg)" required><br>
+        <button class="button" onclick="addPatientRecord()">Add Record</button>
+        <a href="Untitled-2.html" class="button">Back to Main Page</a>
+    </div>
+
+    <script>
+        const MAX_PATIENTS = 100;
+        let blockchain = JSON.parse(localStorage.getItem('blockchain')) || [];
+        let blockCount = blockchain.length;
+
+        function addPatientRecord() {
+            const name = document.getElementById('patientName').value;
+            const diagnosis = document.getElementById('diagnosis').value;
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            if (blockCount >= MAX_PATIENTS) {
+                alert("Blockchain is full. Cannot add more records.");
+                return;
+            }
+
+            const previousHash = blockCount > 0 ? blockchain[blockCount - 1].hash : "0";
+            const newBlock = {
+                index: blockCount + 1,
+                previousHash: previousHash,
+                patient: { name, diagnosis, height, weight },
+                hash: createHash(blockCount + 1, previousHash, name, height, weight)
+            };
+
+            blockchain.push(newBlock);
+            blockCount++;
+            localStorage.setItem('blockchain', JSON.stringify(blockchain));
+
+            alert("Patient record added successfully!");
+            window.location.href = 'Untitled-2.html';
+        }
+
+        function createHash(index, previousHash, name, height, weight) {
+            return `${index}${previousHash}${name}${height}${weight}`;
+        }
+    </script>
+</body>
+</html>
